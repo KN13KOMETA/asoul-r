@@ -1,28 +1,34 @@
-import { APIEmbedField, EmbedBuilder, Locale, SlashCommandBuilder } from "discord.js";
-import { ICommand } from "../types/ICommand";
-import { config } from "../../config";
+import {
+  APIEmbedField,
+  EmbedBuilder,
+  Locale,
+  SlashCommandBuilder,
+} from "discord.js";
+import { ICommand } from "../types/ICommand.js";
+import { config } from "../../config.js";
 
 const command: ICommand = {
   data: new SlashCommandBuilder()
     .setName("coalinkverify")
     .setDescription("Verify user and game profile link.")
-    .addStringOption(o =>
-      o.setName("name")
-        .setDescription("Player in game name")
-        .setRequired(true)
+    .addStringOption((o) =>
+      o.setName("name").setDescription("Player in game name").setRequired(true),
     )
-    .addUserOption(o =>
-      o.setName("user")
+    .addUserOption((o) =>
+      o
+        .setName("user")
         .setDescription("Player discord account")
-        .setRequired(true)
+        .setRequired(true),
     )
-    .addBooleanOption(o =>
-      o.setName("verify")
+    .addBooleanOption((o) =>
+      o
+        .setName("verify")
         .setDescription("Should set verify true or false")
-        .setRequired(true)
+        .setRequired(true),
     ) as SlashCommandBuilder,
   fun: async (inter) => {
-    if (!config.coasdb.adminList.includes(inter.user.id)) return inter.reply("ONLY ADMINS CAN TYPE THIS COMMAND");
+    if (!config.coasdb.adminList.includes(inter.user.id))
+      return inter.reply("ONLY ADMINS CAN TYPE THIS COMMAND");
 
     await inter.deferReply();
     const url = config.coasdb.url;
@@ -53,23 +59,25 @@ const command: ICommand = {
       return inter.editReply({ embeds: [embed] });
     }
 
-    const result = await (await fetch(
-      url + "/user/discord/" + name,
-      {
+    const result = await (
+      await fetch(url + "/user/discord/" + name, {
         method: "PUT",
         headers: new Headers({ "Content-Type": "application/json" }),
         body: JSON.stringify({
           discord_verified: shouldVerify,
-          discord_id: user.id
-        })
-      }
-    )).json();
+          discord_id: user.id,
+        }),
+      })
+    ).json();
 
-    embed.setTitle("Verify " + (shouldVerify ? "set" : "reset"))
-      .setDescription(`User <@${user.id}> has ${shouldVerify ? "verified" : "unverified"} game account "${result.name}".`)
+    embed
+      .setTitle("Verify " + (shouldVerify ? "set" : "reset"))
+      .setDescription(
+        `User <@${user.id}> has ${shouldVerify ? "verified" : "unverified"} game account "${result.name}".`,
+      );
 
-    inter.editReply({ embeds: [embed] })
-  }
-}
+    inter.editReply({ embeds: [embed] });
+  },
+};
 
-module.exports = command;
+export default command;

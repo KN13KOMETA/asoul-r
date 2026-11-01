@@ -1,5 +1,5 @@
 import { ActivityType } from "discord.js";
-import { IConfig } from "./src/types/IConfig";
+import { IConfig } from "./src/types/IConfig.js";
 
 export const config: IConfig = {
 	// Your bot token

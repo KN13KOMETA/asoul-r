@@ -1,18 +1,22 @@
-import { APIEmbedField, EmbedBuilder, Locale, SlashCommandBuilder } from "discord.js";
-import { ICommand } from "../types/ICommand";
-import { config } from "../../config";
+import {
+  APIEmbedField,
+  EmbedBuilder,
+  Locale,
+  SlashCommandBuilder,
+} from "discord.js";
+import { ICommand } from "../types/ICommand.js";
+import { config } from "../../config.js";
 
 const command: ICommand = {
   data: new SlashCommandBuilder()
     .setName("coadeleteuser")
     .setDescription("Deletes user from DB.")
-    .addStringOption(o =>
-      o.setName("name")
-        .setDescription("Player in game name")
-        .setRequired(true)
+    .addStringOption((o) =>
+      o.setName("name").setDescription("Player in game name").setRequired(true),
     ) as SlashCommandBuilder,
   fun: async (inter) => {
-    if (!config.coasdb.adminList.includes(inter.user.id)) return inter.reply("ONLY ADMINS CAN TYPE THIS COMMAND");
+    if (!config.coasdb.adminList.includes(inter.user.id))
+      return inter.reply("ONLY ADMINS CAN TYPE THIS COMMAND");
 
     await inter.deferReply();
     const url = config.coasdb.url;
@@ -33,10 +37,9 @@ const command: ICommand = {
 
     const name = inter.options.getString("name", true);
 
-    const result = await (await fetch(
-      url + "/user/" + name,
-      { method: "DELETE" }
-    )).json();
+    const result = await (
+      await fetch(url + "/user/" + name, { method: "DELETE" })
+    ).json();
 
     if (result.error != undefined) {
       embed.setColor(0xff6666);
@@ -44,11 +47,12 @@ const command: ICommand = {
       return inter.editReply({ embeds: [embed] });
     }
 
-    embed.setTitle("Player delete succesful")
+    embed
+      .setTitle("Player delete succesful")
       .setDescription(`User "${name}", was deleted.`);
 
-    inter.editReply({ embeds: [embed] })
-  }
-}
+    inter.editReply({ embeds: [embed] });
+  },
+};
 
-module.exports = command;
+export default command;

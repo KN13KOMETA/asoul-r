@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, Client, Collection, StringSelectMenuInteraction } from "discord.js";
-import { IButtonInteraction } from "./ICommand";
+import { IButtonInteraction } from "./ICommand.js";
 
 export class EClient extends Client {
 	public cmdList: Collection<string, (inter: ChatInputCommandInteraction) => void> = new Collection();
