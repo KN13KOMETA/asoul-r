@@ -23,7 +23,7 @@
         },
         "homepage": "https://github.com/ClintFlames/asoul-r#readme",
         "dependencies": {
-                "discord.js": "14.10.2",
+                "discord.js": "14.28.0",
                 "levenshtein": "^1.0.5",
                 "qrcode": "1.5.3",
                 "weather-js": "2.0.0"
