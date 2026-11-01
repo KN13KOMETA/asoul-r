@@ -1,0 +1,8 @@
+.git
+.gitignore
+
+build
+node_modules
+
+pnpm-*.yaml
+tsconfig.json
