@@ -9,7 +9,10 @@
     "start": "node build/src/index.js",
     "watch": "tsc -w",
     "dev": "tsx watch src/index.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint:reuse": "reuse lint",
+    "lint": "pnpm lint:reuse",
+    "check": "pnpm typecheck && pnpm lint"
   },
   "keywords": [
     "discord",
