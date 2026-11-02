@@ -1,7 +1,2 @@
 build
-config.js
-
-bnr.bat
-
-node_modules/
-package-lock.json
+node_modules
