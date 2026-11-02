@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024-2026 KN13KOMETA <kn13kometa@gmail.com>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import { EmbedBuilder } from "discord.js";
 import { config } from "../../config.js";
 

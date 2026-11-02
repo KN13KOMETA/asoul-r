@@ -16,7 +16,7 @@
     "bot"
   ],
   "author": "KN13KOMETA",
-  "license": "SEE IN LICENSE",
+  "license": "AGPL-3.0-or-later",
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
