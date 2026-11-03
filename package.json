@@ -6,9 +6,9 @@
   "scripts": {
     "clean": "rimraf build",
     "build": "pnpm clean && tsc",
-    "start": "node build/src/index.js",
+    "start": "node --env-file=.env build/src/index.js",
     "watch": "tsc -w",
-    "dev": "tsx watch src/index.js",
+    "dev": "tsx watch --env-file=.env src/index.ts",
     "typecheck": "tsc --noEmit",
     "lint:reuse": "reuse lint",
     "lint": "pnpm lint:reuse",

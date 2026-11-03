@@ -14,7 +14,7 @@ import { ICommand } from "./types/ICommand.js";
 import { EClient } from "./types/EClient.js";
 import { readdir } from "fs";
 import path from "path";
-import { config } from "../config.js";
+import config from "./config.js";
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] }) as EClient;
 
@@ -30,13 +30,13 @@ client.once(Events.ClientReady, () => {
   const statusFun = () => {
     // !Useless return but ts returns error
     if (!client.user) return;
-    client.user.setActivity(config.statusList[iStat++]);
-    if (iStat == config.statusList.length) iStat = 0;
+    client.user.setActivity(config.get("discord.bot.status.list")[iStat++]);
+    if (iStat == config.get("discord.bot.status.list").length) iStat = 0;
   };
 
-  if (!config.statusList.length) return;
+  if (!config.get("discord.bot.status.list").length) return;
   statusFun();
-  setInterval(statusFun, config.statusSwitchInterval * 1000);
+  setInterval(statusFun, config.get("discord.bot.status.interval") * 1000);
 });
 
 // Handling interactions
@@ -77,6 +77,7 @@ readdir(path.join(import.meta.dirname, "cmd"), "utf-8", async (e, fileList) => {
   const restBody = [];
   for (let file of fileList) {
     if (!file.endsWith(".js") && !file.endsWith(".ts")) continue;
+    if (file.includes("coa")) continue;
     const commandModule = await import(
       path.join(import.meta.dirname, "cmd", file)
     );
@@ -93,8 +94,10 @@ ${[...client.cmdList.keys()].map((v) => "  " + v).join("\n")}`);
 
   // Sending commands to discord to add it
   new REST({ version: "10" })
-    .setToken(config.token)
-    .put(Routes.applicationCommands(config.applicationId), { body: restBody });
+    .setToken(config.get("discord.bot.token"))
+    .put(Routes.applicationCommands(config.get("discord.applicationID")), {
+      body: restBody,
+    });
 });
 
-client.login(config.token);
+client.login(config.get("discord.bot.token"));
