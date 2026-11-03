@@ -25,18 +25,23 @@ client.sltList = new Collection();
 client.once(Events.ClientReady, () => {
   if (!client.user) throw new Error(`"Client.user" is empty.`);
   console.log("Online as " + client.user.tag);
+
   let iStat = 0;
+  const statuses = config.get("discord.bot.status");
 
   const statusFun = () => {
     // !Useless return but ts returns error
     if (!client.user) return;
-    client.user.setActivity(config.get("discord.bot.status.list")[iStat++]);
-    if (iStat == config.get("discord.bot.status.list").length) iStat = 0;
+    const s = statuses[iStat++];
+
+    client.user.setActivity(s.activity);
+    if (iStat == statuses.length) iStat = 0;
+
+    setTimeout(statusFun, s.timer * 1000);
   };
 
-  if (!config.get("discord.bot.status.list").length) return;
+  if (statuses.length == 0) return;
   statusFun();
-  setInterval(statusFun, config.get("discord.bot.status.interval") * 1000);
 });
 
 // Handling interactions
