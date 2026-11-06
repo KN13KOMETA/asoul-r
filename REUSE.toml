@@ -10,6 +10,7 @@ path = [
 "devnotes.txt",
 "flake.lock",
 "flake.nix",
+"nodemon.json",
 "package.json",
 "pnpm-lock.yaml",
 "pnpm-workspace.yaml",

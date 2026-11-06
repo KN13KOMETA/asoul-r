@@ -1,0 +1,8 @@
+{
+  "verbose": true,
+  "ignore": ["src/paraglide/"],
+  "watch": ["messages/", "src/"],
+  "exec": "pnpm build:paraglide && tsx --env-file=.env src/index.ts | pino-pretty",
+  "env": { "NODE_ENV": "dev" },
+  "ext": "ts,json"
+}
