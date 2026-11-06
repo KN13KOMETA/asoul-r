@@ -4,10 +4,13 @@
 
 import pino from "pino";
 import { divide } from "@/math.js";
+import { m } from "./paraglide/messages.js";
 
 const logger = pino();
 
 logger.info("Check github actions");
+
+logger.info(m.example_message({ username: "Username" }));
 
 const res = divide(10, 2);
 
