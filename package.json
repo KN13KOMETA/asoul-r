@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "pnpm build:paraglide && concurrently -k -n bot,paraglide -c blue,green \"nodemon\" \"nodemon --config paraglide.nodemon.json\"",
     "clean": "rimraf build && rimraf src/paraglide",
     "build:paraglide": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide --emit-ts-declarations",
     "build:typescript": "tsc",
@@ -37,6 +37,7 @@
     "@inlang/cli": "^3.4.0",
     "@inlang/paraglide-js": "^3.1.0",
     "@types/node": "^26.6.6",
+    "concurrently": "^10.0.6",
     "nodemon": "^3.1.14",
     "pino-pretty": "^13.2.0",
     "resultar-check": "^4.0.0",

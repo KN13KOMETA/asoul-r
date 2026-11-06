@@ -12,6 +12,7 @@ path = [
 "flake.nix",
 "nodemon.json",
 "package.json",
+"paraglide.nodemon.json",
 "pnpm-lock.yaml",
 "pnpm-workspace.yaml",
 "tsconfig.json",
