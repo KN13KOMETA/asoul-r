@@ -1,12 +1,17 @@
-# SPDX-FileCopyrightText: 2026 KN13KOMETA <kn13kometa@gmail.com>
-#
-# SPDX-License-Identifier: AGPL-3.0-or-later
-
-.git
+# Ignore files
 .gitignore
+.neotreeignore
+.noteignore
 
-build
+# Vitest reports and artifacts
+.vitest/
+
+# Lock files
+flake.lock
+
+# Build directory
+dist
+
+# Node and Pnpm files
 node_modules
-
 pnpm-*.yaml
-tsconfig.json

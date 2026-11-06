@@ -1,0 +1,28 @@
+Enter enviroment:
+nix develop
+
+Run all checks:
+pnpm check
+
+Run dev mode:
+pnpm dev
+
+Build and run:
+pnpm build
+pnpm start
+
+Get word comments:
+note (word)
+
+Biome fix:
+pnpm lint:biome-fix
+
+Annotate file:
+reuse annotate -l AGPL-3.0-or-later -c "KN13KOMETA <kn13kometa@gmail.com>" file
+
+Annotate dir:
+reuse annotate -l AGPL-3.0-or-later -c "KN13KOMETA <kn13kometa@gmail.com>" -r dir
+
+Annotate src and tests:
+reuse annotate -l AGPL-3.0-or-later -c "KN13KOMETA <kn13kometa@gmail.com>" -r ./src ./tests
+
