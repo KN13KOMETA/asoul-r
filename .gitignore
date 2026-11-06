@@ -1,9 +1,12 @@
-# SPDX-FileCopyrightText: 2023-2026 KN13KOMETA <kn13kometa@gmail.com>
-#
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# Vitest reports and artifacts
+.vitest/
 
-build
+# Build directory
+dist
+
+# Node.JS files
 node_modules
 
+# Config files
 .env
-config.json
+config.toml

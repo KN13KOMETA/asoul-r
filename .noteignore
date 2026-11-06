@@ -1,0 +1,14 @@
+# Used for note command
+
+# Git files
+.git
+
+# Vitest reports and artifacts
+.vitest/
+
+# Build directory
+dist
+
+# Node and Pnpm files
+node_modules
+pnpm-*.yaml
