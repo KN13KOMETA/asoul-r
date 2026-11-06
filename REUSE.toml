@@ -17,7 +17,8 @@ path = [
 "vitest.config.ts",
 
 ".github/workflows/check.yml",
-
+"messages/**",
+"project.inlang/**",
 "tests/tsconfig.json",
 ]
 SPDX-FileCopyrightText = "2026 KN13KOMETA <kn13kometa@gmail.com>"

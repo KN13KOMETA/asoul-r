@@ -6,7 +6,16 @@
     "useIgnoreFile": false
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": [
+      "**",
+      "!src/paraglide",
+      "!!dist",
+      "!!project.inlang",
+      "project.inlang/settings.json",
+      "project.inlang/descriptions.json",
+      "project.inlang/paraglide.config.{js,mjs,ts,cjs}"
+    ]
   },
   "formatter": {
     "enabled": true,

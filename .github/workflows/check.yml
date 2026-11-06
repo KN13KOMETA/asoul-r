@@ -31,5 +31,5 @@ jobs:
           cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Run checks
-        run: nix develop --command pnpm check
+      - name: Run git checks
+        run: nix develop -c "git-check"
