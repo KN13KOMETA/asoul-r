@@ -72,6 +72,10 @@
             awk -f ${awkScript}
         '';
       };
+      dk-git-check = pkgs.writeShellScriptBin "git-check" ''
+        pnpm build:paraglide
+        pnpm check
+      '';
     });
 
     devShells = forAllSystems (pkgs: {
@@ -79,6 +83,7 @@
         packages = with pkgs; [
           git
           self.packages.${pkgs.stdenv.hostPlatform.system}.dk-note
+          self.packages.${pkgs.stdenv.hostPlatform.system}.dk-git-check
 
           nodejs
           self.packages.${pkgs.stdenv.hostPlatform.system}.dk-pnpm

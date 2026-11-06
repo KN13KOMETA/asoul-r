@@ -31,5 +31,5 @@ jobs:
           cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Build paraglide and run checks
-        run: nix develop -c pnpm build:paraglide -c pnpm check
+      - name: Run git checks
+        run: nix develop -c "git-check"
