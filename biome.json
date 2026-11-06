@@ -11,7 +11,7 @@
       "**",
       "!src/paraglide",
       "!!dist",
-      "!!project.inlang",
+      "!!project.inlang/**/*",
       "project.inlang/settings.json",
       "project.inlang/descriptions.json",
       "project.inlang/paraglide.config.{js,mjs,ts,cjs}"
