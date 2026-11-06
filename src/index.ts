@@ -7,6 +7,8 @@ import { divide } from "@/math.js";
 
 const logger = pino();
 
+logger.info("Check github actions");
+
 const res = divide(10, 2);
 
 res.match(
