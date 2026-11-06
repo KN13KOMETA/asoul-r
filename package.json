@@ -1,47 +1,47 @@
 {
-  "name": "asoul-r",
-  "version": "1.0.0",
-  "description": "Discord utility bot written in TS with discord.js",
-  "main": "build/src/index.js",
-  "scripts": {
-    "clean": "rimraf build",
-    "build": "pnpm clean && tsc",
-    "start": "node --env-file=.env build/src/index.js",
-    "watch": "tsc -w",
-    "dev": "tsx watch --env-file=.env src/index.ts",
-    "typecheck": "tsc --noEmit",
-    "lint:reuse": "reuse lint",
-    "lint": "pnpm lint:reuse",
-    "check": "pnpm typecheck && pnpm lint"
-  },
-  "keywords": [
-    "discord",
-    "bot"
-  ],
-  "author": "KN13KOMETA",
-  "license": "AGPL-3.0-or-later",
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.17.0",
-      "onFail": "download"
-    }
-  },
-  "type": "module",
-  "devDependencies": {
-    "@types/convict": "^6.1.6",
-    "@types/levenshtein": "^1.0.4",
-    "@types/node": "^26.6.6",
-    "@types/qrcode": "^1.5.6",
-    "rimraf": "^6.1.3",
-    "tsx": "^4.23.15",
-    "typescript": "^7.0.2"
-  },
-  "dependencies": {
-    "convict": "^6.2.5",
-    "discord.js": "^14.28.0",
-    "levenshtein": "^1.0.5",
-    "qrcode": "^1.5.4",
-    "weather-js": "^2.0.0"
-  }
+	"name": "asoul-r",
+	"version": "1.0.0",
+	"description": "Discord utility bot written in TS with discord.js",
+	"main": "build/index.js",
+	"scripts": {
+		"clean": "rimraf build",
+		"build": "pnpm clean && tsc",
+		"start": "node --env-file=.env build/index.js",
+		"watch": "tsc -w",
+		"dev": "tsx watch --env-file=.env src/index.ts",
+		"typecheck": "tsc --noEmit",
+		"lint:reuse": "reuse lint",
+		"lint": "pnpm lint:reuse",
+		"check": "pnpm typecheck && pnpm lint"
+	},
+	"keywords": [
+		"discord",
+		"bot"
+	],
+	"author": "KN13KOMETA",
+	"license": "AGPL-3.0-or-later",
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "^11.17.0",
+			"onFail": "download"
+		}
+	},
+	"type": "module",
+	"devDependencies": {
+		"@types/convict": "^6.1.6",
+		"@types/levenshtein": "^1.0.4",
+		"@types/node": "^26.6.6",
+		"@types/qrcode": "^1.5.6",
+		"rimraf": "^6.1.3",
+		"tsx": "^4.23.15",
+		"typescript": "^7.0.2"
+	},
+	"dependencies": {
+		"convict": "^6.2.5",
+		"discord.js": "^14.28.0",
+		"levenshtein": "^1.0.5",
+		"qrcode": "^1.5.4",
+		"weather-js": "^2.0.0"
+	}
 }
