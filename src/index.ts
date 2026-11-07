@@ -6,7 +6,11 @@ import pino from "pino";
 import { divide } from "@/math.js";
 import { m } from "./paraglide/messages.js";
 
-const logger = pino();
+const logger = pino({
+  level: process.env["NODE_ENV"] === "dev" ? "debug" : "info",
+});
+
+logger.info(`Logger level is set to ${logger.level}`);
 
 logger.info("Check github actions");
 
