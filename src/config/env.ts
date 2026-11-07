@@ -7,7 +7,7 @@ import { errAsync, okAsync, ResultAsync } from "resultar";
 import z from "zod";
 import { validateDiscordToken } from "@/validate/discord/token.js";
 
-export const zenv = z.object({
+const zenv = z.object({
   NODE_ENV: z.enum(["development", "production"]).default("production"),
   DISCORD_BOT_TOKEN: z
     .string()
