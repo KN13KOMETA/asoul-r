@@ -3,11 +3,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import pino from "pino";
+import { zenv } from "@/config/env.js";
 import { divide } from "@/math.js";
 import { m } from "@/paraglide/messages.js";
 
+const env = zenv.parse(process.env);
+
 const logger = pino({
-  level: process.env.NODE_ENV === "development" ? "debug" : "info",
+  level: env.NODE_ENV === "development" ? "debug" : "info",
 });
 
 logger.info(`Logger level is set to ${logger.level}`);
