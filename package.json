@@ -14,7 +14,7 @@
     "typecheck:test": "resultar-check -p tests/tsconfig.json",
     "typecheck": "pnpm typecheck:src && pnpm typecheck:test",
     "lint:reuse": "reuse lint",
-    "lint:biome": "biome check .",
+    "lint:biome": "biome check --error-on-warnings .",
     "lint:biome-fix": "biome check --write .",
     "lint": "pnpm lint:reuse && pnpm lint:biome",
     "test": "vitest run",
