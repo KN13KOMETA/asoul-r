@@ -210,6 +210,9 @@ importers:
         specifier: ^4.6.7
         version: 4.6.7
     devDependencies:
+      '@gracefullight/biome-plugin':
+        specifier: ^0.2.3
+        version: 0.2.3
       '@inlang/cli':
         specifier: ^3.4.0
         version: 3.6.0
@@ -506,6 +509,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@gracefullight/biome-plugin@0.2.3':
+    resolution: {integrity: sha512-5PM4l1aiC/MHLcTohKSatszPOvVWHIbtObKSfzoWMahnMeBrMjqEEhn8cmue7BCHDmDjDWqqrXSWx/c5Iezr+g==}
 
   '@inlang/cli@3.6.0':
     resolution: {integrity: sha512-IQdki7NAXkA//RMEndIWu2bybQl1rAmtY1O+RPI26KJdRolDPauBfCPnmn39S1pQWBFJ68+oyLaj1mqqSswxuQ==}
@@ -1997,6 +2003,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.28.2':
     optional: true
+
+  '@gracefullight/biome-plugin@0.2.3': {}
 
   '@inlang/cli@3.6.0':
     dependencies:

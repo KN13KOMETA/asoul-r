@@ -1,5 +1,8 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "plugins": [
+    "node_modules/@gracefullight/biome-plugin/rules/no-relative-imports.grit"
+  ],
   "vcs": {
     "enabled": false,
     "clientKind": "git",
