@@ -10,3 +10,17 @@ node_modules
 # Config files
 .env
 config.toml
+
+# Nodemon
+.nodemon-trigger
+
+# Inlang files
+# Paraglide initiates .gitignore there
+# but its not present on rebuilds
+project.inlang/*
+!project.inlang/settings.json
+!project.inlang/descriptions.json
+!project.inlang/paraglide.config.js
+!project.inlang/paraglide.config.mjs
+!project.inlang/paraglide.config.ts
+!project.inlang/paraglide.config.cjs
