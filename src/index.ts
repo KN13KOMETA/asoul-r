@@ -7,7 +7,7 @@ import { divide } from "@/math.js";
 import { m } from "@/paraglide/messages.js";
 
 const logger = pino({
-  level: process.env.NODE_ENV === "dev" ? "debug" : "info",
+  level: process.env.NODE_ENV === "development" ? "debug" : "info",
 });
 
 logger.info(`Logger level is set to ${logger.level}`);
