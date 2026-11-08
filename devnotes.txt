@@ -23,6 +23,5 @@ reuse annotate -l AGPL-3.0-or-later -c "KN13KOMETA <kn13kometa@gmail.com>" file
 Annotate dir:
 reuse annotate -l AGPL-3.0-or-later -c "KN13KOMETA <kn13kometa@gmail.com>" -r dir
 
-Annotate src and tests:
-reuse annotate -l AGPL-3.0-or-later -c "KN13KOMETA <kn13kometa@gmail.com>" -r ./src ./tests/*.test.ts
-
+Annotate src, tests, messages:
+reuse annotate -l AGPL-3.0-or-later -c "KN13KOMETA <kn13kometa@gmail.com>" -r ./src ./tests/*.test.ts ./messages

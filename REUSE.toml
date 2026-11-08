@@ -21,7 +21,6 @@ path = [
 "vitest.nodemon.json",
 
 ".github/workflows/check.yml",
-"messages/**",
 "project.inlang/**",
 "tests/tsconfig.json",
 ]
