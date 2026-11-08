@@ -1,8 +1,8 @@
 {
   "verbose": true,
   "ignore": ["src/paraglide/"],
-  "watch": ["src/", ".nodemon-trigger", ".env"],
-  "exec": "oxnode --env-file=.env src/index.ts | pino-pretty",
-  "env": { "NODE_ENV": "development" },
-  "ext": "ts,json"
+  "watch": ["src/", ".nodemon-trigger-paraglide", ".env"],
+  "ext": "ts,json",
+  "exec": "touch .nodemon-trigger && oxnode --env-file=.env src/index.ts | pino-pretty",
+  "env": { "NODE_ENV": "development" }
 }

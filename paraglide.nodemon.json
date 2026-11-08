@@ -2,6 +2,6 @@
   "verbose": true,
   "watch": ["messages/"],
   "ext": "toml",
-  "exec": "pnpm build:paraglide && touch .nodemon-trigger",
+  "exec": "pnpm build:paraglide && touch .nodemon-trigger-paraglide",
   "runOnChangeOnly": true
 }
