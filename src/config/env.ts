@@ -7,14 +7,24 @@ import { errAsync, okAsync, ResultAsync } from "resultar";
 import z from "zod";
 import { validateDiscordToken } from "@/validate/discord/token.js";
 
-const zenv = z.object({
-  NODE_ENV: z.enum(["development", "production"]).default("production"),
+const zenvBase = {
   DISCORD_BOT_TOKEN: z
     .string()
     .refine(async (v) => (await validateDiscordToken(v)).isOk()),
   DISCORD_APPLICATION_ID: z.string(),
-});
+};
 
+const zenv = z.discriminatedUnion("NODE_ENV", [
+  z.object({
+    NODE_ENV: z.literal("development"),
+    DISCORD_GUILD_ID: z.string(),
+    ...zenvBase,
+  }),
+  z.object({
+    NODE_ENV: z.literal("production").default("production"),
+    ...zenvBase,
+  }),
+]);
 export type Zenv = z.infer<typeof zenv>;
 
 export const parseEnvConfig = (
