@@ -7,6 +7,7 @@ path = [
 ".neotreeignore",
 ".noteignore",
 "biome.json",
+"concurrently.ts",
 "devnotes.txt",
 "flake.lock",
 "flake.nix",
@@ -17,6 +18,7 @@ path = [
 "pnpm-workspace.yaml",
 "tsconfig.json",
 "vitest.config.ts",
+"vitest.nodemon.json",
 
 ".github/workflows/check.yml",
 "messages/**",
