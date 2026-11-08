@@ -1,17 +1,33 @@
 # Ignore files
-.gitignore
-.neotreeignore
-.noteignore
+.*ignore
+
+# Ignore lock files
+*lock*
+
+
+
+# Git
+.git/
+
+# Github
+.github/
 
 # Vitest reports and artifacts
 .vitest/
 
-# Lock files
-flake.lock
-
 # Build directory
-dist
+dist/
 
-# Node and Pnpm files
-node_modules
+# Node
+node_modules/
+
+# Nodemon
+*nodemon.json
+
+
+
+# Nodemon triggers
+.nodemon-trigger*
+
+# Pnpm
 pnpm-*.yaml
