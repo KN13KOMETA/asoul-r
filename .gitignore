@@ -12,7 +12,7 @@ node_modules
 config.toml
 
 # Nodemon
-.nodemon-trigger
+.nodemon-trigger*
 
 # Inlang files
 # Paraglide initiates .gitignore there
