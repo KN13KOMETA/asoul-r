@@ -12,9 +12,9 @@ export class InvalidDiscordTokenError extends createTaggedError({
 
 export const validateDiscordToken = (
   token: string,
-): ResultAsync<null, InvalidDiscordTokenError> => {
+): ResultAsync<string, InvalidDiscordTokenError> => {
   const rest = new REST({ version: "10" }).setToken(token);
-  const promise = rest.get(Routes.user("@me")).then(() => null);
+  const promise = rest.get(Routes.user("@me")).then(() => token);
 
   return ResultAsync.fromPromise(promise, () => new InvalidDiscordTokenError());
 };
