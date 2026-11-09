@@ -20,6 +20,6 @@ logger.info(m.example_message({ username: "Username" }));
 const res = divide(10, 2);
 
 res.match(
-  (v) => logger.info(`Value is ${v}`),
-  (e) => logger.error(e),
+  (ok) => logger.info(`Value is ${ok}`),
+  (err) => logger.error(err),
 );
