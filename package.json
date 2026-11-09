@@ -18,6 +18,8 @@
     "build": "pnpm clean && pnpm build:paraglide && pnpm build:typescript",
     "start": "node --env-file=.env build/index.js",
 
+    "deploy": "oxnode --env-file=.env src/discord/deploy-commands.ts | pino-pretty",
+
     "dev": "pnpm build:paraglide && oxnode concurrently.ts"
   },
   "keywords": [],

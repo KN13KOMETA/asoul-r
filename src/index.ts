@@ -13,6 +13,11 @@ const env = await parseEnvConfigOrExit(logger, process.env);
 logger.level = env.NODE_ENV === "development" ? "debug" : "info";
 logger.info(`Logger level is set to ${logger.level}`);
 
+if (env.NODE_ENV === "development") {
+  logger.info(`Deploying commands to guild with id ${env.DISCORD_GUILD_ID}`);
+  await import("@/discord/deploy-commands.js");
+}
+
 logger.info("Check github actions");
 
 logger.info(m.example_message({ username: "Username" }));
