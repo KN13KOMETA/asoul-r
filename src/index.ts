@@ -18,8 +18,6 @@ if (env.NODE_ENV === "development") {
   await import("@/discord/deploy-commands.js");
 }
 
-logger.info("Check github actions");
-
 logger.info(m.example_message({ username: "Username" }));
 
 const res = divide(10, 2);
