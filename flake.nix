@@ -79,7 +79,6 @@
         packages = with pkgs; [
           git
           self.packages.${pkgs.stdenv.hostPlatform.system}.dk-note
-          self.packages.${pkgs.stdenv.hostPlatform.system}.dk-git-check
 
           nodejs
           self.packages.${pkgs.stdenv.hostPlatform.system}.dk-pnpm
