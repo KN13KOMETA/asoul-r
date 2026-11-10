@@ -1,5 +1,8 @@
-
 #!/usr/bin/awk -f
+
+# SPDX-FileCopyrightText: 2026 KN13KOMETA <kn13kometa@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Prints todo comments in beautiful way
 # Use grep first to get todo comments
