@@ -72,10 +72,6 @@
             awk -f ${awkScript}
         '';
       };
-      dk-git-check = pkgs.writeShellScriptBin "git-check" ''
-        pnpm build:paraglide
-        pnpm check
-      '';
     });
 
     devShells = forAllSystems (pkgs: {
@@ -91,10 +87,6 @@
           reuse
           biome
         ];
-
-        shellHook = ''
-          pnpm i --frozen-lockfile
-        '';
       };
     });
   };
