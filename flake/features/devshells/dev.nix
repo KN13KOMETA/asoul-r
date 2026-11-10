@@ -7,6 +7,11 @@ _: {
     devShells.dev = pkgs.mkShell {
       inputsFrom = [config.devShells.default];
 
+      packages = with pkgs; [
+        nodejs
+        config.packages.pnpm
+      ];
+
       shellHook = ''
         if [ -d node_modules/.bin ]; then
           rm -f node_modules/.bin/node

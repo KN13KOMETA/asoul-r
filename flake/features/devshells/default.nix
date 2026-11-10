@@ -9,9 +9,6 @@ _: {
         git
         config.packages.note
 
-        nodejs
-        config.packages.pnpm
-
         reuse
         biome
       ];
