@@ -12,6 +12,8 @@ import type {
 import { createTaggedError, errAsync, ResultAsync, ResultTask } from "resultar";
 import { validateDiscordCommand } from "@/validate/discord/command.js";
 
+// TODO: Rewrite without dynamic imports
+
 export interface DiscordCommand {
   data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder;
   execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
