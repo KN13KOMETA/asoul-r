@@ -16,9 +16,16 @@ import { validateDiscordCommand } from "@/validate/discord/command.js";
 
 export const commandsDir = path.join(import.meta.dirname, "commands");
 
+export class DiscordCommandError extends createTaggedError({
+  name: "DiscordCommandError",
+  message: "Discord Command Error: $reason",
+}) {}
+
 export interface DiscordCommand {
   data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder;
-  execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
+  execute: (
+    interaction: ChatInputCommandInteraction,
+  ) => ResultAsync<null, DiscordCommandError>;
 }
 
 export class DiscordLoadCommandsError extends createTaggedError({

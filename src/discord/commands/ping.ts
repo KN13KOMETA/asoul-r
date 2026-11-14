@@ -3,13 +3,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { SlashCommandBuilder } from "discord.js";
-import type { DiscordCommand } from "@/discord/command.js";
+import { ResultAsync } from "resultar";
+import { type DiscordCommand, DiscordCommandError } from "@/discord/command.js";
 
 export default {
   data: new SlashCommandBuilder()
     .setName("ping")
     .setDescription("Replies with Pong!"),
-  execute: async (interaction) => {
-    await interaction.reply("Pong!");
-  },
+  execute: (interaction) =>
+    ResultAsync.fromPromise(
+      interaction.reply("Pong!"),
+      (err) =>
+        new DiscordCommandError({ reason: "Failed to reply.", cause: err }),
+    ).map(() => null),
 } satisfies DiscordCommand;
