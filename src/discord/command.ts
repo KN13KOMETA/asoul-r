@@ -34,9 +34,9 @@ export class DiscordLoadCommandsError extends createTaggedError({
 }) {}
 
 export const discordLoadCommands = (
-  fullpath: string,
+  commandsDir: string,
 ): ResultAsync<DiscordCommand[], DiscordLoadCommandsError> => {
-  if (!existsSync(fullpath) || !statSync(fullpath).isDirectory()) {
+  if (!existsSync(commandsDir) || !statSync(commandsDir).isDirectory()) {
     return errAsync(
       new DiscordLoadCommandsError({
         reason: "path does not exists or not a directory",
@@ -44,12 +44,12 @@ export const discordLoadCommands = (
     );
   }
 
-  const tasks = readdirSync(fullpath)
+  const tasks = readdirSync(commandsDir)
     .filter((filename) => filename.endsWith(".ts") || filename.endsWith(".js"))
     .map((filename) =>
       ResultTask.fromResultAsync(() =>
         ResultAsync.fromPromise<unknown, DiscordLoadCommandsError>(
-          import(path.join(fullpath, filename)),
+          import(path.join(commandsDir, filename)),
           (err) =>
             new DiscordLoadCommandsError({
               reason: `failed to load module "${filename}".`,
