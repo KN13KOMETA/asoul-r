@@ -14,6 +14,8 @@ import { validateDiscordCommand } from "@/validate/discord/command.js";
 
 // TODO: Rewrite without dynamic imports
 
+export const commandsDir = path.join(import.meta.dirname, "commands");
+
 export interface DiscordCommand {
   data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder;
   execute: (interaction: ChatInputCommandInteraction) => Promise<void>;

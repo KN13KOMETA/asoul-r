@@ -2,18 +2,16 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import path from "node:path";
 import { REST, Routes } from "discord.js";
 import pino from "pino";
 import { ResultAsync } from "resultar";
 import { parseEnvConfigOrExit } from "@/config/env.js";
-import { discordLoadCommands } from "@/discord/command.js";
+import { commandsDir, discordLoadCommands } from "@/discord/command.js";
 
 const logger = pino();
 const env = await parseEnvConfigOrExit(logger, process.env);
 
-const commandsPath = path.join(import.meta.dirname, "commands");
-const commands = await discordLoadCommands(commandsPath).match(
+const commands = await discordLoadCommands(commandsDir).match(
   (ok) => ok,
   (err) => {
     logger.error(err);
