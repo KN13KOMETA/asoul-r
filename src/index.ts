@@ -4,6 +4,7 @@
 
 import pino from "pino";
 import { parseEnvConfigOrExit } from "@/config/env.js";
+import { Bot } from "@/discord/bot.js";
 import { divide } from "@/math.js";
 import { m } from "@/paraglide/messages.js";
 
@@ -25,4 +26,14 @@ const res = divide(10, 2);
 res.match(
   (ok) => logger.info(`Value is ${ok}`),
   (err) => logger.error(err),
+);
+
+const bot = new Bot(logger.child({ module: "discord" }), env);
+
+(await bot.start()).match(
+  () => {},
+  (err) => {
+    logger.error(err);
+    process.exit(1);
+  },
 );
