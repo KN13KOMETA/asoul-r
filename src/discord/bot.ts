@@ -62,23 +62,25 @@ export class Bot {
         return;
       }
 
-      await command.execute(interaction).match(
-        () => {},
-        async (err) => {
-          this.#logger.error(err);
-          if (interaction.replied || interaction.deferred) {
-            await interaction.followUp({
-              content: "There was an error while executing this command!",
-              flags: MessageFlags.Ephemeral,
-            });
-          } else {
-            await interaction.reply({
-              content: "There was an error while executing this command!",
-              flags: MessageFlags.Ephemeral,
-            });
-          }
-        },
-      );
+      await command
+        .execute(logger.child({ command: command.data.name }), interaction)
+        .match(
+          () => {},
+          async (err) => {
+            this.#logger.error(err);
+            if (interaction.replied || interaction.deferred) {
+              await interaction.followUp({
+                content: "There was an error while executing this command!",
+                flags: MessageFlags.Ephemeral,
+              });
+            } else {
+              await interaction.reply({
+                content: "There was an error while executing this command!",
+                flags: MessageFlags.Ephemeral,
+              });
+            }
+          },
+        );
     });
 
     const tasks: ResultTask<null, DiscordBotError>[] = [];

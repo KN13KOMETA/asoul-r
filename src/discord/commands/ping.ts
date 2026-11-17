@@ -10,7 +10,7 @@ export default {
   data: new SlashCommandBuilder()
     .setName("ping")
     .setDescription("Replies with Pong!"),
-  execute: (interaction) =>
+  execute: (_logger, interaction) =>
     ResultAsync.fromPromise(
       interaction.reply("Pong!"),
       (err) =>
