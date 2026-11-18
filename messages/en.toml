@@ -4,3 +4,7 @@
 
 "$schema"       = "https://inlang.com/schema/inlang-message-format"
 example_message = "Hello world {username}"
+
+[commands.uptime]
+description = "Displays uptime"
+current     = "Uptime {uptime}"
