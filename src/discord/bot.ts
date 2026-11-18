@@ -32,7 +32,7 @@ export class Bot {
   #client: Client;
   #commands: Collection<string, DiscordCommand> = new Collection();
 
-  constructor(logger: Logger, env: Zenv, pstorage: AsyncProjectStorage) {
+  constructor(logger: Logger, env: Zenv) {
     this.#env = env;
     this.#logger = logger;
     this.#localeStorage = new LocaleStorage();
