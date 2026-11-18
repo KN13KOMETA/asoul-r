@@ -38,8 +38,9 @@ export type SplitTime =
     >);
 
 // TODO: validate time
-export const getSplitTime = (t: number, top: SplitTimeTop): SplitTime => {
-  let milliseconds = t;
+export const getSplitTime = (top: SplitTimeTop, t: number): SplitTime => {
+  const sign = t < 0 ? -1 : 1;
+  let milliseconds = Math.abs(t);
 
   if (top >= SplitTimeTop.Seconds) {
     let seconds = Math.floor(milliseconds / 1000);
@@ -59,28 +60,40 @@ export const getSplitTime = (t: number, top: SplitTimeTop): SplitTime => {
 
           return {
             top: SplitTimeTop.Days,
-            milliseconds,
-            seconds,
-            minutes,
-            hours,
-            days,
+            milliseconds: sign * milliseconds,
+            seconds: sign * seconds,
+            minutes: sign * minutes,
+            hours: sign * hours,
+            days: sign * days,
           };
         }
 
         return {
           top: SplitTimeTop.Hours,
-          milliseconds,
-          seconds,
-          minutes,
-          hours,
+          milliseconds: sign * milliseconds,
+          seconds: sign * seconds,
+          minutes: sign * minutes,
+          hours: sign * hours,
         };
       }
 
-      return { top: SplitTimeTop.Minutes, milliseconds, seconds, minutes };
+      return {
+        top: SplitTimeTop.Minutes,
+        milliseconds: sign * milliseconds,
+        seconds: sign * seconds,
+        minutes: sign * minutes,
+      };
     }
 
-    return { top: SplitTimeTop.Seconds, milliseconds, seconds };
+    return {
+      top: SplitTimeTop.Seconds,
+      milliseconds: sign * milliseconds,
+      seconds: sign * seconds,
+    };
   }
 
-  return { top: SplitTimeTop.Milliseconds, milliseconds };
+  return {
+    top: SplitTimeTop.Milliseconds,
+    milliseconds: sign * milliseconds,
+  };
 };
