@@ -7,6 +7,7 @@ import { ResultAsync } from "resultar";
 import { type DiscordCommand, DiscordCommandError } from "@/discord/command.js";
 import { getSplitTime, SplitTimeTop } from "@/format/time.js";
 import { m } from "@/paraglide/messages.js";
+import { getLocale } from "@/paraglide/runtime.js";
 
 export default {
   data: new SlashCommandBuilder()
@@ -23,7 +24,9 @@ export default {
     ResultAsync.fromPromise(
       interaction.reply(
         m["commands.uptime.current"]({
-          uptime: new Intl.DurationFormat("en", { style: "short" }).format(
+          uptime: new Intl.DurationFormat(getLocale(), {
+            style: "short",
+          }).format(
             getSplitTime(
               SplitTimeTop.Days,
               Math.floor(process.uptime() * 1000),
