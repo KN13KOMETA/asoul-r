@@ -18,6 +18,7 @@ import {
   type DiscordLoadCommandsError,
   discordLoadCommands,
 } from "@/discord/command.js";
+import { LocaleStorage } from "@/locale-storage.js";
 
 export class DiscordBotError extends createTaggedError({
   name: "DiscordBotError",
@@ -27,12 +28,14 @@ export class DiscordBotError extends createTaggedError({
 export class Bot {
   #env: Zenv;
   #logger: Logger;
+  #localeStorage: LocaleStorage;
   #client: Client;
   #commands: Collection<string, DiscordCommand> = new Collection();
 
-  constructor(logger: Logger, env: Zenv) {
+  constructor(logger: Logger, env: Zenv, pstorage: AsyncProjectStorage) {
     this.#env = env;
     this.#logger = logger;
+    this.#localeStorage = new LocaleStorage();
     this.#client = new Client({ intents: [GatewayIntentBits.Guilds] });
   }
 
@@ -62,25 +65,31 @@ export class Bot {
         return;
       }
 
-      await command
-        .execute(logger.child({ command: command.data.name }), interaction)
-        .match(
-          () => {},
-          async (err) => {
-            this.#logger.error(err);
-            if (interaction.replied || interaction.deferred) {
-              await interaction.followUp({
-                content: "There was an error while executing this command!",
-                flags: MessageFlags.Ephemeral,
-              });
-            } else {
-              await interaction.reply({
-                content: "There was an error while executing this command!",
-                flags: MessageFlags.Ephemeral,
-              });
-            }
-          },
-        );
+      const discordLocale = interaction.guildLocale || interaction.locale;
+
+      await this.#localeStorage.run(
+        discordLocale,
+        async () =>
+          await command
+            .execute(logger.child({ command: command.data.name }), interaction)
+            .match(
+              () => {},
+              async (err) => {
+                this.#logger.error(err);
+                if (interaction.replied || interaction.deferred) {
+                  await interaction.followUp({
+                    content: "There was an error while executing this command!",
+                    flags: MessageFlags.Ephemeral,
+                  });
+                } else {
+                  await interaction.reply({
+                    content: "There was an error while executing this command!",
+                    flags: MessageFlags.Ephemeral,
+                  });
+                }
+              },
+            ),
+      );
     });
 
     const tasks: ResultTask<null, DiscordBotError>[] = [];
