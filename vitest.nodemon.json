@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "watch": ["tests/", ".nodemon-trigger"],
+  "ext": "test.ts",
+  "exec": "pnpm test"
+}

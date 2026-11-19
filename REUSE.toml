@@ -1,5 +1,10 @@
 version = 1
 
+[[annotations]]
+path                    = ["messages/**"]
+precedence              = "override"
+SPDX-FileCopyrightText  = "2026 ASOUL-R Contributors"
+SPDX-License-Identifier = "CC0-1.0"
 
 [[annotations]]
 path = [
@@ -7,6 +12,7 @@ path = [
 ".neotreeignore",
 ".noteignore",
 "biome.json",
+"concurrently.ts",
 "devnotes.txt",
 "flake.lock",
 "flake.nix",
@@ -17,9 +23,12 @@ path = [
 "pnpm-workspace.yaml",
 "tsconfig.json",
 "vitest.config.ts",
+"vitest.nodemon.json",
+"CONTRIBUTING.md",
 
 ".github/workflows/check.yml",
-"messages/**",
+".github/workflows/validate-pr.yml",
+".github/PULL_REQUEST_TEMPLATE.md",
 "project.inlang/**",
 "tests/tsconfig.json",
 ]
