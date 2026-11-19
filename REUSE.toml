@@ -1,5 +1,10 @@
 version = 1
 
+[[annotations]]
+path                    = ["messages/**"]
+precedence              = "override"
+SPDX-FileCopyrightText  = "2026 ASOUL-R Contributors"
+SPDX-License-Identifier = "CC0-1.0"
 
 [[annotations]]
 path = [
