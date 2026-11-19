@@ -21,8 +21,6 @@ _: {
           ln -sf $(which node) node_modules/.bin/node
         fi
 
-        export PNPM_HOME="$NIX_BUILD_TOP/.pnpm-home"
-
         pnpm i --frozen-lockfile
       '';
     };
