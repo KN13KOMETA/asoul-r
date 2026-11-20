@@ -4,15 +4,15 @@
 
 import { parseEnvConfigOrExit } from "@/config/env.js";
 import { Bot } from "@/discord/bot.js";
-import { createFileLogger, logger } from "@/logger.js";
+import { createFileLogger, getLoggerLevel, setLoggerLevel } from "@/logger.js";
 import { divide } from "@/math.js";
 import { m } from "@/paraglide/messages.js";
 
 const flogger = createFileLogger(import.meta.filename);
 const env = await parseEnvConfigOrExit(flogger, process.env);
 
-logger.level = env.NODE_ENV === "development" ? "debug" : "info";
-flogger.info(`Logger level is set to ${flogger.level}`);
+setLoggerLevel(env.NODE_ENV === "development" ? "debug" : "info");
+flogger.info(`Logger level is set to ${getLoggerLevel()}`);
 
 if (env.NODE_ENV === "development") {
   flogger.info(`Deploying commands to guild with id ${env.DISCORD_GUILD_ID}`);
