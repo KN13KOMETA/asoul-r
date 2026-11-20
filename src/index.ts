@@ -2,14 +2,13 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import { parseEnvConfigOrExit } from "@/config/env.js";
 import { Bot } from "@/discord/bot.js";
+import { env } from "@/env.js";
 import { createFileLogger, getLoggerLevel, setLoggerLevel } from "@/logger.js";
 import { divide } from "@/math.js";
 import { m } from "@/paraglide/messages.js";
 
 const flogger = createFileLogger(import.meta.filename);
-const env = await parseEnvConfigOrExit(flogger, process.env);
 
 setLoggerLevel(env.NODE_ENV === "development" ? "debug" : "info");
 flogger.info(`Logger level is set to ${getLoggerLevel()}`);
@@ -28,7 +27,7 @@ res.match(
   (err) => flogger.error(err),
 );
 
-const bot = new Bot(env);
+const bot = new Bot();
 
 (await bot.start()).match(
   () => {},
