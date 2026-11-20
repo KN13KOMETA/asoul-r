@@ -8,13 +8,13 @@ import { parseEnvConfigOrExit } from "@/config/env.js";
 import { commandsDir, discordLoadCommands } from "@/discord/command.js";
 import { createFileLogger } from "@/logger.js";
 
-const logger = createFileLogger(import.meta.filename);
-const env = await parseEnvConfigOrExit(logger, process.env);
+const flogger = createFileLogger(import.meta.filename);
+const env = await parseEnvConfigOrExit(flogger, process.env);
 
 const commands = await discordLoadCommands(commandsDir).match(
   (ok) => ok,
   (err) => {
-    logger.error(err);
+    flogger.error(err);
     process.exit(1);
   },
 );
@@ -36,8 +36,8 @@ const respond = await ResultAsync.fromPromise(
 );
 
 if (respond.isErr()) {
-  logger.error(respond.error);
+  flogger.error(respond.error);
   process.exit(1);
 }
 
-logger.info(`Deployed ${commands.length} commands.`);
+flogger.info(`Deployed ${commands.length} commands.`);

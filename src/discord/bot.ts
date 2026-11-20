@@ -20,7 +20,7 @@ import {
 import { LocaleStorage } from "@/locale-storage.js";
 import { createFileLogger } from "@/logger.js";
 
-const logger = createFileLogger(import.meta.filename);
+const flogger = createFileLogger(import.meta.filename);
 
 export class DiscordBotError extends createTaggedError({
   name: "DiscordBotError",
@@ -49,14 +49,14 @@ export class Bot {
 
   start(): ResultAsync<null, DiscordBotError> {
     this.#client.once(Events.ClientReady, (readyClient) =>
-      logger.info(`Logged in as ${readyClient.user.tag}`),
+      flogger.info(`Logged in as ${readyClient.user.tag}`),
     );
 
     // TODO: Rewrite this
     this.#client.on(Events.InteractionCreate, async (interaction) => {
       if (!interaction.isChatInputCommand()) return;
 
-      const commandLogger = logger.child({ command: interaction.commandName });
+      const commandLogger = flogger.child({ command: interaction.commandName });
 
       const command = this.#commands.get(interaction.commandName);
 
