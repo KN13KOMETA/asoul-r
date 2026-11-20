@@ -7,10 +7,9 @@ import pino from "pino";
 
 export const logger = pino();
 
-export const createFileLogger = (filePath: string) =>
-  logger.child({
-    module: path.basename(
-      path.relative(import.meta.dirname, filePath),
-      path.extname(filePath),
-    ),
-  });
+export const createFileLogger = (filePath: string) => {
+  const relativePath = path.relative(import.meta.dirname, filePath);
+  const moduleName = relativePath.slice(0, -path.extname(relativePath).length);
+
+  return logger.child({ module: moduleName });
+};
