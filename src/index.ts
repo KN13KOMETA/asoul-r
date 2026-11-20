@@ -11,10 +11,14 @@ import { m } from "@/paraglide/messages.js";
 const flogger = createFileLogger(import.meta.filename);
 
 setLoggerLevel(env.NODE_ENV === "development" ? "debug" : "info");
-flogger.info(`Logger level is set to ${getLoggerLevel()}`);
+flogger
+  .child({ logger: { level: getLoggerLevel() } })
+  .info("Logger level is set up.");
 
 if (env.NODE_ENV === "development") {
-  flogger.info(`Deploying commands to guild with id ${env.DISCORD_GUILD_ID}`);
+  flogger
+    .child({ discord: { guildId: env.DISCORD_GUILD_ID } })
+    .info("Deploying commands to discord guild.");
   await import("@/discord/deploy-commands.js");
 }
 
