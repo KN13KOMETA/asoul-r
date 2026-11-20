@@ -28,17 +28,16 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "^11.17.0",
-      "onFail": "download"
+      "version": "^11.17.0"
     },
     "runtime": {
       "name": "node",
-      "version": "24.22.2",
-      "onFail": "download"
+      "version": "24.22.2"
     }
   },
   "type": "module",
   "devDependencies": {
+    "@fast-check/vitest": "^0.5.0",
     "@gracefullight/biome-plugin": "^0.2.3",
     "@inlang/cli": "^3.4.0",
     "@inlang/paraglide-js": "^3.1.0",

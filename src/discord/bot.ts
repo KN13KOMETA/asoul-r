@@ -9,7 +9,6 @@ import {
   GatewayIntentBits,
   MessageFlags,
 } from "discord.js";
-import type { Logger } from "pino";
 import { createTaggedError, ResultAsync, ResultTask } from "resultar";
 import type { Zenv } from "@/config/env.js";
 import {
@@ -19,6 +18,9 @@ import {
   discordLoadCommands,
 } from "@/discord/command.js";
 import { LocaleStorage } from "@/locale-storage.js";
+import { createFileLogger } from "@/logger.js";
+
+const flogger = createFileLogger(import.meta.filename);
 
 export class DiscordBotError extends createTaggedError({
   name: "DiscordBotError",
@@ -27,14 +29,12 @@ export class DiscordBotError extends createTaggedError({
 
 export class Bot {
   #env: Zenv;
-  #logger: Logger;
   #localeStorage: LocaleStorage;
   #client: Client;
   #commands: Collection<string, DiscordCommand> = new Collection();
 
-  constructor(logger: Logger, env: Zenv) {
+  constructor(env: Zenv) {
     this.#env = env;
-    this.#logger = logger;
     this.#localeStorage = new LocaleStorage();
     this.#client = new Client({ intents: [GatewayIntentBits.Guilds] });
   }
@@ -49,19 +49,19 @@ export class Bot {
 
   start(): ResultAsync<null, DiscordBotError> {
     this.#client.once(Events.ClientReady, (readyClient) =>
-      this.#logger.info(`Logged in as ${readyClient.user.tag}`),
+      flogger.info(`Logged in as ${readyClient.user.tag}`),
     );
 
     // TODO: Rewrite this
     this.#client.on(Events.InteractionCreate, async (interaction) => {
       if (!interaction.isChatInputCommand()) return;
 
-      const logger = this.#logger.child({ command: interaction.commandName });
+      const commandLogger = flogger.child({ command: interaction.commandName });
 
       const command = this.#commands.get(interaction.commandName);
 
       if (!command) {
-        logger.error(`Command not found.`);
+        commandLogger.error(`Command not found.`);
         return;
       }
 
@@ -70,25 +70,23 @@ export class Bot {
       await this.#localeStorage.run(
         discordLocale,
         async () =>
-          await command
-            .execute(logger.child({ command: command.data.name }), interaction)
-            .match(
-              () => {},
-              async (err) => {
-                this.#logger.error(err);
-                if (interaction.replied || interaction.deferred) {
-                  await interaction.followUp({
-                    content: "There was an error while executing this command!",
-                    flags: MessageFlags.Ephemeral,
-                  });
-                } else {
-                  await interaction.reply({
-                    content: "There was an error while executing this command!",
-                    flags: MessageFlags.Ephemeral,
-                  });
-                }
-              },
-            ),
+          await command.execute(interaction).match(
+            () => {},
+            async (err) => {
+              commandLogger.error(err);
+              if (interaction.replied || interaction.deferred) {
+                await interaction.followUp({
+                  content: "There was an error while executing this command!",
+                  flags: MessageFlags.Ephemeral,
+                });
+              } else {
+                await interaction.reply({
+                  content: "There was an error while executing this command!",
+                  flags: MessageFlags.Ephemeral,
+                });
+              }
+            },
+          ),
       );
     });
 

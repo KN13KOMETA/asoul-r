@@ -9,7 +9,6 @@ import type {
   SlashCommandBuilder,
   SlashCommandOptionsOnlyBuilder,
 } from "discord.js";
-import type { Logger } from "pino";
 import { createTaggedError, errAsync, ResultAsync, ResultTask } from "resultar";
 import { validateDiscordCommand } from "@/validate/discord/command.js";
 
@@ -25,7 +24,6 @@ export class DiscordCommandError extends createTaggedError({
 export interface DiscordCommand {
   data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder;
   execute: (
-    logger: Logger,
     interaction: ChatInputCommandInteraction,
   ) => ResultAsync<null, DiscordCommandError>;
 }

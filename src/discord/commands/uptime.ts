@@ -20,7 +20,7 @@ export default {
     .setDescriptionLocalizations({
       [Locale.Russian]: m["commands.uptime.description"]({ locale: "ru" }),
     }),
-  execute: (_logger, interaction) =>
+  execute: (interaction) =>
     ResultAsync.fromPromise(
       interaction.reply(
         m["commands.uptime.current"]({
