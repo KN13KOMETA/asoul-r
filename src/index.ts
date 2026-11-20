@@ -2,13 +2,12 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import pino from "pino";
 import { parseEnvConfigOrExit } from "@/config/env.js";
 import { Bot } from "@/discord/bot.js";
+import { logger } from "@/logger.js";
 import { divide } from "@/math.js";
 import { m } from "@/paraglide/messages.js";
 
-const logger = pino();
 const env = await parseEnvConfigOrExit(logger, process.env);
 
 logger.level = env.NODE_ENV === "development" ? "debug" : "info";
@@ -28,7 +27,7 @@ res.match(
   (err) => logger.error(err),
 );
 
-const bot = new Bot(logger.child({ module: "discord" }), env);
+const bot = new Bot(env);
 
 (await bot.start()).match(
   () => {},

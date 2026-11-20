@@ -3,12 +3,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { REST, Routes } from "discord.js";
-import pino from "pino";
 import { ResultAsync } from "resultar";
 import { parseEnvConfigOrExit } from "@/config/env.js";
 import { commandsDir, discordLoadCommands } from "@/discord/command.js";
+import { createFileLogger } from "@/logger.js";
 
-const logger = pino();
+const logger = createFileLogger(import.meta.filename);
 const env = await parseEnvConfigOrExit(logger, process.env);
 
 const commands = await discordLoadCommands(commandsDir).match(
