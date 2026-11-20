@@ -70,7 +70,7 @@ export class Bot {
       await this.#localeStorage.run(
         discordLocale,
         async () =>
-          await command.execute(commandLogger, interaction).match(
+          await command.execute(interaction).match(
             () => {},
             async (err) => {
               commandLogger.error(err);
