@@ -10,13 +10,13 @@ import {
   MessageFlags,
 } from "discord.js";
 import { createTaggedError, ResultAsync, ResultTask } from "resultar";
-import type { Zenv } from "@/config/env.js";
 import {
   commandsDir,
   type DiscordCommand,
   type DiscordLoadCommandsError,
   discordLoadCommands,
 } from "@/discord/command.js";
+import { env } from "@/env.js";
 import { LocaleStorage } from "@/locale-storage.js";
 import { createFileLogger } from "@/logger.js";
 
@@ -28,13 +28,11 @@ export class DiscordBotError extends createTaggedError({
 }) {}
 
 export class Bot {
-  #env: Zenv;
   #localeStorage: LocaleStorage;
   #client: Client;
   #commands: Collection<string, DiscordCommand> = new Collection();
 
-  constructor(env: Zenv) {
-    this.#env = env;
+  constructor() {
     this.#localeStorage = new LocaleStorage();
     this.#client = new Client({ intents: [GatewayIntentBits.Guilds] });
   }
@@ -109,7 +107,7 @@ export class Bot {
     tasks.push(
       ResultTask.fromResultAsync(() =>
         ResultAsync.fromPromise(
-          this.#client.login(this.#env.DISCORD_BOT_TOKEN),
+          this.#client.login(env.DISCORD_BOT_TOKEN),
           (err) =>
             new DiscordBotError({ reason: "Failed to login.", cause: err }),
         ).map(() => null),

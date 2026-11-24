@@ -2,20 +2,23 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import { parseEnvConfigOrExit } from "@/config/env.js";
 import { Bot } from "@/discord/bot.js";
-import { createFileLogger, logger } from "@/logger.js";
+import { env } from "@/env.js";
+import { createFileLogger, getLoggerLevel, setLoggerLevel } from "@/logger.js";
 import { divide } from "@/math.js";
 import { m } from "@/paraglide/messages.js";
 
 const flogger = createFileLogger(import.meta.filename);
-const env = await parseEnvConfigOrExit(flogger, process.env);
 
-logger.level = env.NODE_ENV === "development" ? "debug" : "info";
-flogger.info(`Logger level is set to ${flogger.level}`);
+setLoggerLevel(env.NODE_ENV === "development" ? "debug" : "info");
+flogger
+  .child({ logger: { level: getLoggerLevel() } })
+  .info("Logger level is set up.");
 
 if (env.NODE_ENV === "development") {
-  flogger.info(`Deploying commands to guild with id ${env.DISCORD_GUILD_ID}`);
+  flogger
+    .child({ discord: { guildId: env.DISCORD_GUILD_ID } })
+    .info("Deploying commands to discord guild.");
   await import("@/discord/deploy-commands.js");
 }
 
@@ -28,7 +31,7 @@ res.match(
   (err) => flogger.error(err),
 );
 
-const bot = new Bot(env);
+const bot = new Bot();
 
 (await bot.start()).match(
   () => {},

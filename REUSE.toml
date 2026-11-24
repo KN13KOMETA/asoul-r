@@ -25,6 +25,7 @@ path = [
 "vitest.config.ts",
 "vitest.nodemon.json",
 "CONTRIBUTING.md",
+"README.md",
 
 ".github/workflows/check.yml",
 ".github/workflows/validate-pr.yml",
