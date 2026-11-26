@@ -6,6 +6,7 @@ import { existsSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 import type {
   ChatInputCommandInteraction,
+  Collection,
   SlashCommandBuilder,
   SlashCommandOptionsOnlyBuilder,
 } from "discord.js";
@@ -32,6 +33,8 @@ export class DiscordLoadCommandsError extends createTaggedError({
   name: "DiscordLoadCommandsError",
   message: "Discord Load Commands: $reason",
 }) {}
+
+export type DiscordCommandCollection = Collection<string, DiscordCommand>;
 
 export const discordLoadCommands = (
   commandsDir: string,

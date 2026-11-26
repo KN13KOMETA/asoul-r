@@ -12,7 +12,7 @@ import {
 import { createTaggedError, ResultAsync, ResultTask } from "resultar";
 import {
   commandsDir,
-  type DiscordCommand,
+  type DiscordCommandCollection,
   type DiscordLoadCommandsError,
   discordLoadCommands,
 } from "@/discord/command.js";
@@ -30,7 +30,7 @@ export class DiscordBotError extends createTaggedError({
 export class Bot {
   #localeStorage: LocaleStorage;
   #client: Client;
-  #commands: Collection<string, DiscordCommand> = new Collection();
+  #commands: DiscordCommandCollection = new Collection();
 
   constructor() {
     this.#localeStorage = new LocaleStorage();
