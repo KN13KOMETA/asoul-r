@@ -9,14 +9,16 @@ import { createFileLogger, getLoggerLevel, setLoggerLevel } from "@/logger.js";
 const flogger = createFileLogger(import.meta.filename);
 
 setLoggerLevel(env.NODE_ENV === "development" ? "debug" : "info");
-flogger
-  .child({ logger: { level: getLoggerLevel() } })
-  .info("Logger level is set up.");
+flogger.info(
+  { logger: { level: getLoggerLevel() } },
+  "Logger level is set up.",
+);
 
 if (env.NODE_ENV === "development") {
-  flogger
-    .child({ discord: { guildId: env.DISCORD_GUILD_ID } })
-    .info("Deploying commands to discord guild.");
+  flogger.info(
+    { discord: { guildId: env.DISCORD_GUILD_ID } },
+    "Deploying commands to discord guild.",
+  );
   await import("@/discord/deploy-commands.js");
 }
 
