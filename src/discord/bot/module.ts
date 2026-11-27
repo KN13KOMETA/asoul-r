@@ -15,7 +15,7 @@ import {
 import type { BotData } from "@/discord/bot.js";
 
 export class DiscordBotModuleError extends createTaggedError({
-  name: "DiscordBotError",
+  name: "DiscordBotModuleError",
   message: "Discord Bot Module: $reason",
 }) {}
 
