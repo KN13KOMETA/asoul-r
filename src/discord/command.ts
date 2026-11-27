@@ -38,6 +38,7 @@ export type DiscordCommandCollection = Collection<string, DiscordCommand>;
 
 export const discordLoadCommands = (
   commandsDir: string,
+  recursive = false,
 ): ResultAsync<DiscordCommand[], DiscordLoadCommandsError> => {
   if (!existsSync(commandsDir) || !statSync(commandsDir).isDirectory()) {
     return errAsync(
@@ -47,7 +48,7 @@ export const discordLoadCommands = (
     );
   }
 
-  const tasks = readdirSync(commandsDir)
+  const tasks = readdirSync(commandsDir, { recursive, encoding: "utf8" })
     .filter((filename) => filename.endsWith(".ts") || filename.endsWith(".js"))
     .map((filename) =>
       ResultTask.fromResultAsync(() =>
