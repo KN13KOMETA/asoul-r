@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import { Events, MessageFlags } from "discord.js";
-import type { BotModule } from "@/discord/bot.js";
+import type { DiscordBotModule } from "@/discord/bot/module.js";
 import { createFileLogger } from "@/logger.js";
 
 const flogger = createFileLogger(import.meta.filename);
@@ -46,4 +46,4 @@ export default (async ({ localeStorage, client, commands }) => {
         ),
     );
   });
-}) satisfies BotModule;
+}) satisfies DiscordBotModule;

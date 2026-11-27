@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import path from "node:path";
+import { loadDiscordBotModules } from "@/discord/bot/module.js";
 import { Bot } from "@/discord/bot.js";
 import { env } from "@/env.js";
 import { createFileLogger, getLoggerLevel, setLoggerLevel } from "@/logger.js";
-import { loadDiscordBotModules } from "./discord/bot/module.js";
 
 const flogger = createFileLogger(import.meta.filename);
 
