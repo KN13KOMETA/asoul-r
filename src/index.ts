@@ -6,6 +6,7 @@ import path from "node:path";
 import { Bot } from "@/discord/bot.js";
 import { env } from "@/env.js";
 import { createFileLogger, getLoggerLevel, setLoggerLevel } from "@/logger.js";
+import { loadDiscordBotModules } from "./discord/bot/module.js";
 
 const flogger = createFileLogger(import.meta.filename);
 
@@ -26,7 +27,7 @@ if (env.NODE_ENV === "development") {
 const bot = new Bot();
 
 const botModulesDir = path.join(import.meta.dirname, "./discord/bot/modules/");
-(await Bot.loadModules(botModulesDir)).match(
+(await loadDiscordBotModules(botModulesDir)).match(
   async (botModules) => {
     flogger.info(
       { bot: { modules: [...botModules.keys()] } },

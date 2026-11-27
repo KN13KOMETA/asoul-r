@@ -2,17 +2,14 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-import { existsSync, readdirSync, statSync } from "node:fs";
-import path from "node:path";
 import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
 import {
   createTaggedError,
-  errAsync,
-  okAsync,
   ResultAsync,
   ResultTask,
   tryResultAsync,
 } from "resultar";
+import type { DiscordBotModuleCollection } from "@/discord/bot/module.js";
 import {
   commandsDir,
   type DiscordCommandCollection,
@@ -36,9 +33,6 @@ export interface BotData {
   commands: DiscordCommandCollection;
 }
 
-export type BotModule = (data: BotData) => Promise<void>;
-export type BotModuleCollection = Collection<string, BotModule>;
-
 export class Bot {
   #data: BotData;
 
@@ -59,7 +53,7 @@ export class Bot {
   }
 
   executeModules(
-    modules: BotModuleCollection,
+    modules: DiscordBotModuleCollection,
   ): ResultAsync<null, DiscordBotError> {
     const tasks: ResultTask<null, DiscordBotError>[] = modules.map(
       (module, moduleName) =>
@@ -78,80 +72,6 @@ export class Bot {
     return ResultAsync.fromSafePromise(
       ResultTask.runPromise(ResultTask.all(tasks)),
     ).map(() => null);
-  }
-
-  static loadModules(
-    modulesDir: string,
-  ): ResultAsync<BotModuleCollection, DiscordBotError> {
-    if (!existsSync(modulesDir) || !statSync(modulesDir).isDirectory()) {
-      return errAsync(
-        new DiscordBotError({
-          reason: "path does not exists or not a directory",
-        }),
-      );
-    }
-
-    flogger.debug({ modulesDir });
-
-    const getTasksRecursive = (dir: string) =>
-      readdirSync(dir).flatMap(
-        (p): ResultTask<{ name: string; f: BotModule }, DiscordBotError>[] => {
-          const pfull = path.join(dir, p);
-          flogger.debug({ pfull });
-          if (statSync(pfull).isDirectory()) return getTasksRecursive(pfull);
-
-          if (!p.endsWith(".ts") && !p.endsWith(".js")) return [];
-
-          return [
-            ResultTask.fromResultAsync(() =>
-              ResultAsync.fromPromise<unknown, DiscordBotError>(
-                import(pfull),
-                (err) =>
-                  new DiscordBotError({
-                    reason: `failed to load module "${p}".`,
-                    cause: err,
-                  }),
-              ).andThen((module) => {
-                if (
-                  !(
-                    typeof module === "object" &&
-                    module !== null &&
-                    "default" in module &&
-                    typeof module.default === "function" &&
-                    module.default.length === 1
-                  )
-                ) {
-                  return DiscordBotError.err({
-                    reason: `module "${p}" must export default function`,
-                  });
-                }
-
-                const relativePath = path.relative(modulesDir, pfull);
-                const moduleName = relativePath.slice(
-                  0,
-                  -path.extname(relativePath).length,
-                );
-
-                return okAsync({
-                  name: moduleName,
-                  f: module.default as BotModule,
-                });
-              }),
-            ),
-          ];
-        },
-      );
-
-    const tasks = getTasksRecursive(modulesDir);
-
-    return ResultAsync.fromSafePromise(
-      ResultTask.runPromise(ResultTask.all(tasks)),
-    ).map((modules) =>
-      modules.reduce(
-        (p, v) => p.set(v.name, v.f),
-        new Collection() satisfies BotModuleCollection,
-      ),
-    );
   }
 
   start(): ResultAsync<null, DiscordBotError> {
