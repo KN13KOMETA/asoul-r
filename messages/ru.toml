@@ -3,4 +3,4 @@ example_message = "Привет, мир {username}"
 
 [commands.uptime]
 description = "Отображает время безотказный работы"
-current     = "Время безотказный работы {uptime}"
+current     = "Время безотказной работы {uptime}"
