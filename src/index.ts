@@ -27,7 +27,7 @@ if (env.NODE_ENV === "development") {
 const bot = new Bot();
 
 const botModulesDir = path.join(import.meta.dirname, "./discord/bot/modules/");
-(await loadDiscordBotModules(botModulesDir)).match(
+(await loadDiscordBotModules(botModulesDir, true)).match(
   async (botModules) => {
     flogger.info(
       { bot: { modules: [...botModules.keys()] } },

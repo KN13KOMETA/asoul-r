@@ -13,9 +13,6 @@ import {
   ResultTask,
 } from "resultar";
 import type { BotData } from "@/discord/bot.js";
-import { createFileLogger } from "@/logger.js";
-
-const flogger = createFileLogger(import.meta.filename);
 
 export class DiscordBotModuleError extends createTaggedError({
   name: "DiscordBotError",
@@ -37,63 +34,42 @@ export const loadDiscordBotModules = (
     );
   }
 
-  flogger.debug({ modulesDir });
-
-  const getTasksRecursive = (dir: string) =>
-    readdirSync(dir).flatMap(
-      (
-        p,
-      ): ResultTask<
-        { name: string; f: DiscordBotModule },
-        DiscordBotModuleError
-      >[] => {
-        const pfull = path.join(dir, p);
-        flogger.debug({ pfull });
-        if (statSync(pfull).isDirectory()) return getTasksRecursive(pfull);
-
-        if (!p.endsWith(".ts") && !p.endsWith(".js")) return [];
-
-        return [
-          ResultTask.fromResultAsync(() =>
-            ResultAsync.fromPromise<unknown, DiscordBotModuleError>(
-              import(pfull),
-              (err) =>
-                new DiscordBotModuleError({
-                  reason: `failed to load module "${p}".`,
-                  cause: err,
-                }),
-            ).andThen((module) => {
-              if (
-                !(
-                  typeof module === "object" &&
-                  module !== null &&
-                  "default" in module &&
-                  typeof module.default === "function" &&
-                  module.default.length === 1
-                )
-              ) {
-                return DiscordBotModuleError.err({
-                  reason: `module "${p}" must export default function`,
-                });
-              }
-
-              const relativePath = path.relative(modulesDir, pfull);
-              const moduleName = relativePath.slice(
-                0,
-                -path.extname(relativePath).length,
-              );
-
-              return okAsync({
-                name: moduleName,
-                f: module.default as DiscordBotModule,
-              });
+  const tasks = readdirSync(modulesDir, {
+    recursive,
+    encoding: "utf8",
+  })
+    .filter((filename) => filename.endsWith(".ts") || filename.endsWith(".js"))
+    .map((filename) =>
+      ResultTask.fromResultAsync(() =>
+        ResultAsync.fromPromise<unknown, DiscordBotModuleError>(
+          import(path.join(modulesDir, filename)),
+          (err) =>
+            new DiscordBotModuleError({
+              reason: `failed to load module "${filename}".`,
+              cause: err,
             }),
-          ),
-        ];
-      },
-    );
+        ).andThen((module) => {
+          if (
+            !(
+              typeof module === "object" &&
+              module !== null &&
+              "default" in module &&
+              typeof module.default === "function" &&
+              module.default.length === 1
+            )
+          ) {
+            return DiscordBotModuleError.err({
+              reason: `module "${filename}" must export default function`,
+            });
+          }
 
-  const tasks = getTasksRecursive(modulesDir);
+          return okAsync({
+            name: filename,
+            f: module.default as DiscordBotModule,
+          });
+        }),
+      ),
+    );
 
   return ResultAsync.fromSafePromise(
     ResultTask.runPromise(ResultTask.all(tasks)),
