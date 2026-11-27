@@ -22,7 +22,7 @@ if you want to check it for some reason.
 - [x] Github Actions
 - [x] Command Loader
 - [x] Localization
-- [ ] Module system for bot
+- [x] Module system for bot
 - [ ] Recursive module/command loading
 - [ ] Support for Discord: Subcommands, AutocompleteInteraction,
       ButtonInteraction, StringSelectMenuInteraction, ModalSubmitInteraction

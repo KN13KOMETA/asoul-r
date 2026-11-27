@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import path from "node:path";
 import { Bot } from "@/discord/bot.js";
 import { env } from "@/env.js";
 import { createFileLogger, getLoggerLevel, setLoggerLevel } from "@/logger.js";
@@ -23,6 +24,27 @@ if (env.NODE_ENV === "development") {
 }
 
 const bot = new Bot();
+
+const botModulesDir = path.join(import.meta.dirname, "./discord/bot/modules/");
+(await Bot.loadModules(botModulesDir)).match(
+  async (botModules) => {
+    flogger.info(
+      { bot: { modules: [...botModules.keys()] } },
+      "Found bot modules:",
+    );
+    (await bot.executeModules(botModules)).match(
+      () => {},
+      (err) => {
+        flogger.error(err);
+        process.exit(1);
+      },
+    );
+  },
+  (err) => {
+    flogger.error(err);
+    process.exit(1);
+  },
+);
 
 (await bot.start()).match(
   () => {},
